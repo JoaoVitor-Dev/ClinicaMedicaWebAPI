@@ -37,6 +37,21 @@ public class MedicoController extends BaseController {
         return ok(service.buscarPorId(id));
     }   
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Medico medicoAtual){
+        Medico medicoExistente = service.buscarPorId(id);
+        if (medicoExistente == null) {
+            return notFound("Médico não encontrado com ID: " + id);
+        }
+
+        medicoExistente.setNome(medicoAtual.getNome());
+        medicoExistente.setEspecialidade(medicoAtual.getEspecialidade());
+        medicoExistente.setCrm(medicoAtual.getCrm());
+
+        Medico medicoAtualizado = service.salvar(medicoExistente);
+        return ok(medicoAtualizado);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> excluir(@PathVariable Long id) {
         service.excluir(id);

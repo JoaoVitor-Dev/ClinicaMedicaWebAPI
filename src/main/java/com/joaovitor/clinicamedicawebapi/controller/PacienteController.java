@@ -37,6 +37,23 @@ public class PacienteController extends BaseController {
         return ok(service.buscarPorId(id));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Paciente pacienteAtual){
+        Paciente pacienteExistente = service.buscarPorId(id);
+        if (pacienteExistente == null) {
+            return notFound("Paciente não encontrado com ID: " + id);
+        }
+
+        pacienteExistente.setNome(pacienteAtual.getNome());
+        pacienteExistente.setCpf(pacienteAtual.getCpf());
+        pacienteExistente.setEmail(pacienteAtual.getEmail());
+        pacienteExistente.setTelefone(pacienteAtual.getTelefone());
+        pacienteExistente.setNumeroCarteirinha(pacienteAtual.getNumeroCarteirinha());
+
+        Paciente pacienteAtualizado = service.salvar(pacienteExistente);
+        return ok(pacienteAtualizado);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> excluir(@PathVariable Long id) {
         service.excluir(id);
