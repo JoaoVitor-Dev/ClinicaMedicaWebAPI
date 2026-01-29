@@ -29,6 +29,13 @@ public class Consulta {
         this.observacoes = observacoes;
     }
 
+    public Consulta(Paciente paciente, Medico medico, LocalDateTime dataHora, String observacoes) {
+        this.paciente = paciente;
+        this.medico = medico;
+        this.dataHora = dataHora;
+        this.observacoes = observacoes;
+    }
+
     public Consulta() {
     }
 

@@ -14,7 +14,6 @@ import java.util.NoSuchElementException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // 1. Regra de negócio → 400
     @ExceptionHandler(RegraNegocioException.class)
     public ResponseEntity<ApiResponse<String>> handleRegraNegocio(RegraNegocioException ex) {
         return ResponseEntity
@@ -22,7 +21,6 @@ public class GlobalExceptionHandler {
                 .body(new ApiResponse<>(false, HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
     }
 
-    // 2. Not Found → 404
     @ExceptionHandler({ NoSuchElementException.class, ResourceNotFoundException.class })
     public ResponseEntity<ApiResponse<String>> handleNotFound(RuntimeException ex) {
         return ResponseEntity
@@ -30,7 +28,6 @@ public class GlobalExceptionHandler {
                 .body(new ApiResponse<>(false, HttpStatus.NOT_FOUND.value(), ex.getMessage()));
     }
 
-    // 3. Erro genérico → 500 (somente Exception.class aqui!)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<String>> handleExceptionGenerica(Exception ex) {
         ex.printStackTrace();

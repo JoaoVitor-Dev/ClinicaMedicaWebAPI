@@ -38,7 +38,4 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    
-
-
 }
