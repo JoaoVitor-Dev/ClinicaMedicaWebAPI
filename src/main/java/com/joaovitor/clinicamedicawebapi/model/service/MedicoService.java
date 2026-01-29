@@ -1,10 +1,12 @@
 package com.joaovitor.clinicamedicawebapi.model.service;
 
-
 import com.joaovitor.clinicamedicawebapi.exception.ResourceNotFoundException;
 import com.joaovitor.clinicamedicawebapi.model.entity.Medico;
+import com.joaovitor.clinicamedicawebapi.model.entity.Paciente;
 import com.joaovitor.clinicamedicawebapi.model.repository.MedicoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -21,8 +23,8 @@ public class MedicoService {
         return repository.save(medico);
     }
 
-    public List<Medico> listarTodos() {
-        return repository.findAll();
+    public Page<Medico> listarTodos(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     public Medico buscarPorId(Long id) {

@@ -3,6 +3,9 @@ package com.joaovitor.clinicamedicawebapi.model.service;
 
 import com.joaovitor.clinicamedicawebapi.model.entity.Consulta;
 import com.joaovitor.clinicamedicawebapi.model.repository.ConsultaRepository;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,8 +24,8 @@ public class ConsultaService {
         return repository.save(consulta);
     }
 
-    public List<Consulta> listarTodos() {
-        return repository.findAll();
+    public Page<Consulta> listarTodos(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     public List<Consulta> buscarPorPaciente(Long pacienteId) {
