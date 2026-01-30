@@ -30,4 +30,10 @@ public abstract class BaseController {
                 .status(HttpStatus.NOT_FOUND)
                 .body(new ApiResponse<>(false, HttpStatus.NOT_FOUND.value(), (T) msg));
     }
+
+    protected <T> ResponseEntity<ApiResponse<T>> badRequest(String msg) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(false, HttpStatus.BAD_REQUEST.value(), (T) msg));
+    }
 }

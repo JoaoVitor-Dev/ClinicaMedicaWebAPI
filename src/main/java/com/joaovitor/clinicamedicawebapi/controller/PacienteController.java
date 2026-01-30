@@ -51,6 +51,10 @@ public class PacienteController extends BaseController {
         pacienteExistente.setNumeroCarteirinha(pacienteAtual.getNumeroCarteirinha());
 
         Paciente pacienteAtualizado = service.salvar(pacienteExistente);
+        if (pacienteAtualizado == null) {
+            return badRequest("Erro ao atualizar o paciente com ID: " + id);
+        }
+
         return ok(pacienteAtualizado);
     }
 

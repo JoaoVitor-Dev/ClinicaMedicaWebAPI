@@ -49,6 +49,11 @@ public class MedicoController extends BaseController {
         medicoExistente.setCrm(medicoAtual.getCrm());
 
         Medico medicoAtualizado = service.salvar(medicoExistente);
+
+        if (medicoAtualizado == null) {
+            return badRequest("Erro ao atualizar o médico com ID: " + id);
+        }
+
         return ok(medicoAtualizado);
     }
 
