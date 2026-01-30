@@ -28,6 +28,9 @@ public class MedicoService {
     }
 
     public Medico buscarPorId(Long id) {
+
+        System.out.println("Buscando médico com ID: " + id);
+
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado"));
     }

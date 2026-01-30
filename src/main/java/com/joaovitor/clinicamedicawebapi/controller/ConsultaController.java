@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,6 @@ import com.joaovitor.clinicamedicawebapi.model.service.ConsultaService;
 import com.joaovitor.clinicamedicawebapi.model.service.MedicoService;
 import com.joaovitor.clinicamedicawebapi.model.service.PacienteService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Consulta", description = "Operações de Consulta Médica")
@@ -50,7 +50,6 @@ public class ConsultaController extends BaseController{
 
        System.out.println("Paciente ID: " + consulta.pacienteId());
        System.out.println("Medico ID: " + consulta.medicoId());
-
 
         Medico medico = medicoService.buscarPorId(consulta.medicoId());
         if (medico == null) {
