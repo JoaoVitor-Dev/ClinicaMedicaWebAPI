@@ -48,9 +48,6 @@ public class ConsultaController extends BaseController{
     @PostMapping
     public ResponseEntity<?> criar(@RequestBody ConsultaDto consulta) {   
 
-       System.out.println("Paciente ID: " + consulta.pacienteId());
-       System.out.println("Medico ID: " + consulta.medicoId());
-
         Medico medico = medicoService.buscarPorId(consulta.medicoId());
         if (medico == null) {
             return notFound("Médico não encontrado com ID: " + consulta.medicoId());
