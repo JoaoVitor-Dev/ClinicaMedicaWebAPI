@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class ConsultaController extends BaseController{
     }
     
     @GetMapping("/todos")
-    public ResponseEntity<ApiResponse<Page<Consulta>>> listar(Pageable pageable) {
+    public ResponseEntity<ApiResponse<Page<Consulta>>> listar(@ParameterObject Pageable pageable) {
         return okPage(service.listarTodos(pageable));
     }
 

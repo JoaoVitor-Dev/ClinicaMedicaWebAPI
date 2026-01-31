@@ -6,6 +6,7 @@ import com.joaovitor.clinicamedicawebapi.model.service.MedicoService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class MedicoController extends BaseController {
     }   
 
     @GetMapping("/todos")
-    public ResponseEntity<ApiResponse<Page<Medico>>> listar(Pageable pageable) {
+    public ResponseEntity<ApiResponse<Page<Medico>>> listar(@ParameterObject Pageable pageable) {
         return okPage(service.listarTodos(pageable));
     }   
 
@@ -44,9 +45,7 @@ public class MedicoController extends BaseController {
             return notFound("Médico não encontrado com ID: " + id);
         }
 
-        medicoExistente.setNome(medicoAtual.getNome());
-        medicoExistente.setEspecialidade(medicoAtual.getEspecialidade());
-        medicoExistente.setCrm(medicoAtual.getCrm());
+        medicoExistente.atualizarCom(medicoAtual);
 
         Medico medicoAtualizado = service.salvar(medicoExistente);
 
@@ -62,5 +61,4 @@ public class MedicoController extends BaseController {
         service.excluir(id);
         return ok("Médico excluído com sucesso.");
     }
-
 }

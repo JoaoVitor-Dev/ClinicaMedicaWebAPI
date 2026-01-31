@@ -6,6 +6,7 @@ import com.joaovitor.clinicamedicawebapi.model.service.PacienteService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class PacienteController extends BaseController {
     }
 
     @GetMapping(value = "/todos", produces = "application/json")
-    public ResponseEntity<ApiResponse<Page<Paciente>>> listar(Pageable pageable) {
+    public ResponseEntity<ApiResponse<Page<Paciente>>> listar(@ParameterObject Pageable pageable) {
         return okPage(service.listarTodos(pageable));
     }
 
@@ -44,11 +45,7 @@ public class PacienteController extends BaseController {
             return notFound("Paciente não encontrado com ID: " + id);
         }
 
-        pacienteExistente.setNome(pacienteAtual.getNome());
-        pacienteExistente.setCpf(pacienteAtual.getCpf());
-        pacienteExistente.setEmail(pacienteAtual.getEmail());
-        pacienteExistente.setTelefone(pacienteAtual.getTelefone());
-        pacienteExistente.setNumeroCarteirinha(pacienteAtual.getNumeroCarteirinha());
+        pacienteExistente.atualizarCom(pacienteAtual);
 
         Paciente pacienteAtualizado = service.salvar(pacienteExistente);
         if (pacienteAtualizado == null) {

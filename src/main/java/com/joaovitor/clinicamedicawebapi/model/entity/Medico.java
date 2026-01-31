@@ -24,6 +24,15 @@ public class Medico extends Pessoa {
 
     }
 
+    public void atualizarCom(Medico outro) {
+        if (outro.getNome() != null) this.setNome(outro.getNome());
+        if (outro.getCpf() != null) this.setCpf(outro.getCpf());
+        if (outro.getEmail() != null) this.setEmail(outro.getEmail());
+        if (outro.getTelefone() != null) this.setTelefone(outro.getTelefone());
+        if (outro.getCrm() != null) this.setCrm(outro.getCrm());
+        if (outro.getEspecialidade() != null) this.setEspecialidade(outro.getEspecialidade());
+    }
+
     public String getCrm() {
         return crm;
     }
