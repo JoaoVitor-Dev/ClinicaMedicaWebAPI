@@ -1,7 +1,9 @@
 package com.joaovitor.clinicamedicawebapi.controller;
 
 import com.joaovitor.clinicamedicawebapi.api.ApiResponse;
+import com.joaovitor.clinicamedicawebapi.model.entity.Especialidade;
 import com.joaovitor.clinicamedicawebapi.model.entity.Medico;
+import com.joaovitor.clinicamedicawebapi.model.service.EspecialidadeService;
 import com.joaovitor.clinicamedicawebapi.model.service.MedicoService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,10 +20,12 @@ import org.springframework.web.bind.annotation.*;
 public class MedicoController extends BaseController {
     
     private final MedicoService service;
+    private final EspecialidadeService especialidadeService;
 
-    public MedicoController(MedicoService service) {
+    public MedicoController(MedicoService service, EspecialidadeService especialidadeService) {
         this.service = service;
-    }   
+        this.especialidadeService = especialidadeService;
+    }
 
     @GetMapping("/todos")
     public ResponseEntity<ApiResponse<Page<Medico>>> listar(@ParameterObject Pageable pageable) {
@@ -60,5 +64,33 @@ public class MedicoController extends BaseController {
     public ResponseEntity<?> excluir(@PathVariable Long id) {
         service.excluir(id);
         return ok("Médico inativado com sucesso.");
+    }
+
+    @PostMapping("/{medicoId}/especialidade/{especialidadeId}")
+    public ResponseEntity<?> vincularEspecialidade(
+            @PathVariable Long medicoId,
+            @PathVariable Long especialidadeId
+    ) {
+        Medico medico = service.buscarPorId(medicoId);
+        Especialidade especialidade = especialidadeService.buscarPorId(especialidadeId);
+
+        medico.adicionarEspecialidade(especialidade);
+        service.salvar(medico);
+
+        return ok("Especialidade vinculada com sucesso");
+    }
+
+    @DeleteMapping("/{medicoId}/especialidade/{especialidadeId}")
+    public ResponseEntity<?> desvincularEspecialidade(
+            @PathVariable Long medicoId,
+            @PathVariable Long especialidadeId
+    ) {
+        Medico medico = service.buscarPorId(medicoId);
+        Especialidade especialidade = especialidadeService.buscarPorId(especialidadeId);
+
+        medico.removerEspecialidade(especialidade);
+        service.salvar(medico);
+
+        return ok("Especialidade desvinculada com sucesso");
     }
 }

@@ -1,13 +1,25 @@
 package com.joaovitor.clinicamedicawebapi.model.entity;
 
-import jakarta.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Medico extends Pessoa {
 
     private String crm;
 
-    private String especialidade;
+    private String especialidade; // Manter para compatibilidade
+
+    @ManyToMany
+    @JoinTable(
+            name = "medico_especialidade",
+            joinColumns = @JoinColumn(name = "medico_id"),
+            inverseJoinColumns = @JoinColumn(name = "especialidade_id")
+    )
+    @JsonManagedReference  // Serializa a lista de especialidades
+    private List<Especialidade> especialidades = new ArrayList<>();
 
     public Medico(Long id, String nome, String cpf, String telefone, String email, Boolean ativo, String crm, String especialidade) {
         super(id, nome, cpf, telefone, email, ativo);
@@ -33,6 +45,18 @@ public class Medico extends Pessoa {
         if (outro.getEspecialidade() != null) this.setEspecialidade(outro.getEspecialidade());
     }
 
+    // Métodos auxiliares para gerenciar o relacionamento bidirecional
+    public void adicionarEspecialidade(Especialidade especialidade) {
+        this.especialidades.add(especialidade);
+        especialidade.getMedicos().add(this);
+    }
+
+    public void removerEspecialidade(Especialidade especialidade) {
+        this.especialidades.remove(especialidade);
+        especialidade.getMedicos().remove(this);
+    }
+
+    // Getters e Setters
     public String getCrm() {
         return crm;
     }
@@ -47,5 +71,13 @@ public class Medico extends Pessoa {
 
     public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
+    }
+
+    public List<Especialidade> getEspecialidades() {
+        return especialidades;
+    }
+
+    public void setEspecialidades(List<Especialidade> especialidades) {
+        this.especialidades = especialidades;
     }
 }
