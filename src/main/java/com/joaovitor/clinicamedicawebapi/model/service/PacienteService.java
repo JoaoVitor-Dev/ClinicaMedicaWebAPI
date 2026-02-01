@@ -3,6 +3,7 @@ package com.joaovitor.clinicamedicawebapi.model.service;
 import com.joaovitor.clinicamedicawebapi.exception.RegraNegocioException;
 import com.joaovitor.clinicamedicawebapi.exception.ResourceNotFoundException;
 import com.joaovitor.clinicamedicawebapi.model.entity.Paciente;
+import com.joaovitor.clinicamedicawebapi.model.repository.ConsultaRepository;
 import com.joaovitor.clinicamedicawebapi.model.repository.PacienteRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,9 +15,11 @@ import java.util.Optional;
 public class PacienteService {
 
     private final PacienteRepository repository;
+    private final ConsultaRepository consultaRepository;
 
-    public PacienteService(PacienteRepository repository) {
+    public PacienteService(PacienteRepository repository, ConsultaRepository consultaRepository) {
         this.repository = repository;
+        this.consultaRepository = consultaRepository;
     }
 
     public Paciente salvar(Paciente paciente) {
@@ -40,7 +43,9 @@ public class PacienteService {
     }
 
     public void excluir(Long id) {
-        repository.deleteById(id);
+        Paciente paciente = buscarPorId(id);
+        paciente.setAtivo(false);
+        repository.save(paciente);
     }
 
     private void validarCpfDuplicado(Paciente paciente) {

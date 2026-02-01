@@ -59,6 +59,6 @@ public class MedicoController extends BaseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> excluir(@PathVariable Long id) {
         service.excluir(id);
-        return ok("Médico excluído com sucesso.");
+        return ok("Médico inativado com sucesso.");
     }
 }

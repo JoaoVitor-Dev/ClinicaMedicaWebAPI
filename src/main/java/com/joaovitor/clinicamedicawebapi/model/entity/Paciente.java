@@ -9,8 +9,8 @@ public class Paciente extends Pessoa {
 
     private String convenio;
 
-    public Paciente(Long id, String nome, String cpf, String telefone, String email, String numeroCarteirinha, String convenio) {
-        super(id, nome, cpf, telefone, email);
+    public Paciente(Long id, String nome, String cpf, String telefone, String email, Boolean ativo, String numeroCarteirinha, String convenio) {
+        super(id, nome, cpf, telefone, email, ativo);
         this.numeroCarteirinha = numeroCarteirinha;
         this.convenio = convenio;
     }
@@ -31,6 +31,7 @@ public class Paciente extends Pessoa {
         if (outro.getTelefone() != null) this.setTelefone(outro.getTelefone());
         if (outro.getNumeroCarteirinha() != null) this.setNumeroCarteirinha(outro.getNumeroCarteirinha());
         if (outro.getConvenio() != null) this.setConvenio(outro.getConvenio());
+        if (outro.getAtivo() != null) this.setAtivo(outro.getAtivo());
     }
 
     public String getNumeroCarteirinha() {

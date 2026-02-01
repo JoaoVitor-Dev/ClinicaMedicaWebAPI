@@ -19,12 +19,16 @@ public abstract class Pessoa {
 
     private String email;
 
-    public Pessoa(Long id, String nome, String cpf, String telefone, String email) {
+    @Column(nullable = false)
+    private Boolean ativo;
+
+    public Pessoa(Long id, String nome, String cpf, String telefone, String email, Boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.email = email;
+        this.ativo = ativo;
     }
 
     public Pessoa() {
@@ -68,5 +72,13 @@ public abstract class Pessoa {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 }

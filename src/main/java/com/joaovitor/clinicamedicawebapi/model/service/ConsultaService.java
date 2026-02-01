@@ -23,21 +23,49 @@ public class ConsultaService {
     }
 
     public Consulta salvar(Consulta consulta) {
+        validarMedicoAtivo(consulta);
+        validarPacienteAtivo(consulta);
+        validarConflitoHorario(consulta);
+        return repository.save(consulta);
+    }
 
+    private void validarMedicoAtivo(Consulta consulta) {
+        if (consulta.getMedico() == null) {
+            throw new RegraNegocioException("Médico não informado");
+        }
+
+        if (!consulta.getMedico().getAtivo()) {
+            throw new RegraNegocioException(
+                    "Não é possível agendar consulta. O médico " +
+                            consulta.getMedico().getNome() + " está inativo no sistema"
+            );
+        }
+    }
+
+    private void validarPacienteAtivo(Consulta consulta) {
+        if (consulta.getPaciente() == null) {
+            throw new RegraNegocioException("Paciente não informado");
+        }
+
+        if (!consulta.getPaciente().getAtivo()) {
+            throw new RegraNegocioException(
+                    "Não é possível agendar consulta. O paciente " +
+                            consulta.getPaciente().getNome() + " está inativo no sistema"
+            );
+        }
+    }
+
+    private void validarConflitoHorario(Consulta consulta) {
         Optional<Consulta> consultaExistente = repository.findByMedicoIdAndDataHora(
                 consulta.getMedico().getId(),
                 consulta.getDataHora()
         );
-
-        System.out.println("Consulta existente? " + consultaExistente.isPresent());
 
         if (consultaExistente.isPresent()) {
             throw new RegraNegocioException(
                     "Já existe uma consulta agendada para este médico neste horário"
             );
         }
-
-        return repository.save(consulta);
     }
 
     public Page<Consulta> listarTodos(Pageable pageable) {

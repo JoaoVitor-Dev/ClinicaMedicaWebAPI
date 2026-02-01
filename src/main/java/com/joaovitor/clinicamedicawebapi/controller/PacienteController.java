@@ -58,6 +58,6 @@ public class PacienteController extends BaseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> excluir(@PathVariable Long id) {
         service.excluir(id);
-        return ok("Paciente excluído com sucesso.");
+        return ok("Paciente inativado com sucesso.");
     }
 }
