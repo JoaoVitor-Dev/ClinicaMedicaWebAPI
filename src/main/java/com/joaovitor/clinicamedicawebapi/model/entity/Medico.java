@@ -10,8 +10,6 @@ public class Medico extends Pessoa {
 
     private String crm;
 
-    private String especialidade; // Manter para compatibilidade
-
     @ManyToMany
     @JoinTable(
             name = "medico_especialidade",
@@ -21,15 +19,13 @@ public class Medico extends Pessoa {
     @JsonManagedReference  // Serializa a lista de especialidades
     private List<Especialidade> especialidades = new ArrayList<>();
 
-    public Medico(Long id, String nome, String cpf, String telefone, String email, Boolean ativo, String crm, String especialidade) {
+    public Medico(Long id, String nome, String cpf, String telefone, String email, Boolean ativo, String crm) {
         super(id, nome, cpf, telefone, email, ativo);
         this.crm = crm;
-        this.especialidade = especialidade;
     }
 
-    public Medico(String crm, String especialidade) {
+    public Medico(String crm) {
         this.crm = crm;
-        this.especialidade = especialidade;
     }
 
     public Medico() {
@@ -42,7 +38,6 @@ public class Medico extends Pessoa {
         if (outro.getEmail() != null) this.setEmail(outro.getEmail());
         if (outro.getTelefone() != null) this.setTelefone(outro.getTelefone());
         if (outro.getCrm() != null) this.setCrm(outro.getCrm());
-        if (outro.getEspecialidade() != null) this.setEspecialidade(outro.getEspecialidade());
     }
 
     // Métodos auxiliares para gerenciar o relacionamento bidirecional
@@ -63,14 +58,6 @@ public class Medico extends Pessoa {
 
     public void setCrm(String crm) {
         this.crm = crm;
-    }
-
-    public String getEspecialidade() {
-        return especialidade;
-    }
-
-    public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
     }
 
     public List<Especialidade> getEspecialidades() {

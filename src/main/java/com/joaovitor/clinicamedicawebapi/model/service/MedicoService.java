@@ -39,10 +39,6 @@ public class MedicoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado"));
     }
 
-    public List<Medico> buscarPorEspecialidade(String especialidade) {
-        return repository.findByEspecialidade(especialidade);
-    }
-
     public void excluir(Long id) {
         Medico medico = buscarPorId(id);
         medico.setAtivo(false);

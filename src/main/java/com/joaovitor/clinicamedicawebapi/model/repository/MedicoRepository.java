@@ -8,8 +8,6 @@ import java.util.Optional;
 
 public interface MedicoRepository extends JpaRepository<Medico, Long> {
 
-    List<Medico> findByEspecialidade(String especialidade);
-
     Optional<Medico> findByCpf(String cpf);
 
     Optional<Medico> findByCrm(String crm);

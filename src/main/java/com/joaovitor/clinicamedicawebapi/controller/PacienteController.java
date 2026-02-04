@@ -23,7 +23,7 @@ public class PacienteController extends BaseController {
         this.service = service;
     }
 
-    @GetMapping(value = "/todos", produces = "application/json")
+    @GetMapping(value = "/todos", produces = "application/json; charset=UTF-8")
     public ResponseEntity<ApiResponse<Page<Paciente>>> listar(@ParameterObject Pageable pageable) {
         return okPage(service.listarTodos(pageable));
     }

@@ -68,6 +68,11 @@ public class ConsultaService {
         }
     }
 
+    public Consulta buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RegraNegocioException("Consulta não encontrada"));
+    }
+
     public Page<Consulta> listarTodos(Pageable pageable) {
         return repository.findAll(pageable);
     }

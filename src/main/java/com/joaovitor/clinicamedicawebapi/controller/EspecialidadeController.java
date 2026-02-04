@@ -38,7 +38,7 @@ public class EspecialidadeController extends BaseController {
         return created(service.salvar(especialidade));
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Especialidade>> atualizar(
             @PathVariable Long id,
             @RequestBody EspecialidadeDto dto

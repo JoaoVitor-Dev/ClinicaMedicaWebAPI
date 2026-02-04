@@ -46,6 +46,11 @@ public class ConsultaController extends BaseController{
         return okPage(service.listarTodos(pageable));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+        return ok(service.buscarPorId(id));
+    }
+
     @PostMapping
     public ResponseEntity<?> criar(@RequestBody ConsultaDto consulta) {   
 
